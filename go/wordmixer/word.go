@@ -1,10 +1,10 @@
 package wordmixer
 
-type word struct {
-	word string
+type Word struct {
+	Word string
 }
 
-func newWord(w string) *word {
-	wm := word{w}
+func NewWord(w string) *Word {
+	wm := Word{w}
 	return &wm
 }
