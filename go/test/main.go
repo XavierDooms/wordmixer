@@ -10,4 +10,6 @@ func main() {
 
 	puzzle := wordmixer.NewPuzzle("gdpr", 15, 10)
 	wordmixer.PrintBoard(puzzle)
+
+	//println(wordmixer.ToHtml(puzzle))
 }

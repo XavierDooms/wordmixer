@@ -14,9 +14,8 @@ func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 }
 
 func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
-	word := wordmixer.NewWord(ps.ByName("name"))
-	println(word)
+	puzzle := wordmixer.NewPuzzle(ps.ByName("name"), 15, 15)
+	fmt.Fprint(w, wordmixer.ToHtml(puzzle))
 }
 
 func main() {

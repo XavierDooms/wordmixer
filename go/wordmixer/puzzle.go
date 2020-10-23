@@ -81,11 +81,17 @@ func checkBoardRune(p *Puzzle, i int, j int) bool {
 	return true
 }
 
-func PrintBoard(p *Puzzle) {
+func PrintBoard(p *Puzzle, params ...string) {
+	fmt.Println(BoardToString(p, "\n"))
+}
+
+func BoardToString(p *Puzzle, end string) string {
+	str := ""
 	for _, row := range p.Board {
 		for _, rune := range row {
-			fmt.Print(string(rune))
+			str += string(rune) + " "
 		}
-		fmt.Println("")
+		str += end
 	}
+	return str
 }
