@@ -2,6 +2,13 @@ package wordmixer
 
 import "fmt"
 
+type Solution struct {
+	x  int
+	y  int
+	xd int
+	yd int
+}
+
 type Puzzle struct {
 	word   *Word
 	width  int
@@ -9,6 +16,7 @@ type Puzzle struct {
 	Board  [][]rune
 	count  int
 	iter   int
+	sol    Solution
 }
 
 func NewPuzzle(word string, width int, height int) *Puzzle {
@@ -75,6 +83,10 @@ func checkBoardRune(p *Puzzle, i int, j int) bool {
 			}
 			if match {
 				p.count++
+				p.sol.x = i
+				p.sol.y = j
+				p.sol.xd = x
+				p.sol.yd = y
 			}
 		}
 	}
@@ -94,4 +106,19 @@ func BoardToString(p *Puzzle, end string) string {
 		str += end
 	}
 	return str
+}
+
+func SolutionToString(p *Puzzle) string {
+	solution := fmt.Sprint("x=", p.sol.y+1, " y=", p.sol.x+1)
+	if p.sol.yd < 0 {
+		solution += " left"
+	} else if p.sol.yd > 0 {
+		solution += " right"
+	}
+	if p.sol.xd < 0 {
+		solution += " upper"
+	} else if p.sol.xd > 0 {
+		solution += " down"
+	}
+	return solution
 }

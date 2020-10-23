@@ -11,11 +11,11 @@ func ToHtml(puzzle *Puzzle) string {
 	%s
 	</div>
 	<div  id="solution-div" hidden>
-	Location: TODO
+	Location: %s
 	</div>
 	</body>
 	</html>
 `
-	html := fmt.Sprintf(page, puzzle.word.Word, BoardToString(puzzle, "<br />\n"))
+	html := fmt.Sprintf(page, puzzle.word.Word, BoardToString(puzzle, "<br />\n"), SolutionToString(puzzle))
 	return html
 }
