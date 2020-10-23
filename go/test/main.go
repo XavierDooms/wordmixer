@@ -10,6 +10,6 @@ func main() {
 	word := wordmixer.NewWord("test")
 	println(word.Word)
 
-	puzzle := wordmixer.NewPuzzle("gdpr", 10, 15)
+	puzzle := wordmixer.NewPuzzle("gdpr", 15, 10)
 	fmt.Println(puzzle.Board)
 }
