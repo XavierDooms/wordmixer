@@ -2,6 +2,7 @@ package wordmixer
 
 import (
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -17,7 +18,7 @@ func init() {
 
 func NewWord(w string) *Word {
 	wm := Word{Word: w}
-	wm.runes = []rune(w)
+	wm.runes = []rune(strings.ToUpper(w))
 	wm.len = len(wm.runes)
 	return &wm
 }
