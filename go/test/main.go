@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"../wordmixer"
 )
 
@@ -11,5 +9,5 @@ func main() {
 	println(word.Word)
 
 	puzzle := wordmixer.NewPuzzle("gdpr", 15, 10)
-	fmt.Println(puzzle.Board)
+	wordmixer.PrintBoard(puzzle)
 }

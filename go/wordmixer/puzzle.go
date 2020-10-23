@@ -40,15 +40,13 @@ func isValidBoard(p *Puzzle) bool {
 	p.count = 0
 	for i, _ := range p.Board {
 		checkBoardRow(p, i)
-		fmt.Println("")
 	}
-	fmt.Println(p.count)
+	fmt.Println("Counted ", p.count)
 	return p.count == 1
 }
 
 func checkBoardRow(p *Puzzle, i int) bool {
 	for j, r := range p.Board[i] {
-		fmt.Printf(string(r))
 		if r != p.word.runes[0] {
 			continue
 		}
@@ -81,4 +79,13 @@ func checkBoardRune(p *Puzzle, i int, j int) bool {
 		}
 	}
 	return true
+}
+
+func PrintBoard(p *Puzzle) {
+	for _, row := range p.Board {
+		for _, rune := range row {
+			fmt.Print(string(rune))
+		}
+		fmt.Println("")
+	}
 }
