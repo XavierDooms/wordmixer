@@ -1,6 +1,9 @@
 package wordmixer
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Solution struct {
 	x  int
@@ -10,13 +13,14 @@ type Solution struct {
 }
 
 type Puzzle struct {
-	word   *Word
-	width  int
-	height int
-	Board  [][]rune
-	count  int
-	iter   int
-	sol    Solution
+	word    *Word
+	width   int
+	height  int
+	Board   [][]rune
+	count   int
+	iter    int
+	sol     Solution
+	success bool
 }
 
 func NewPuzzle(word string, size float32) *Puzzle {
@@ -25,12 +29,21 @@ func NewPuzzle(word string, size float32) *Puzzle {
 	p.Board = generateRandomBoard(&p)
 	for true {
 		p.iter++
+		/* if p.iter > 10 {
+			return &p
+		} */
 		p.Board = generateRandomBoard(&p)
-		if isValidBoard(&p) {
+		countMatches(&p)
+		if p.count == 0 {
+			insertRandomMatche(&p)
+			countMatches(&p)
+		}
+		if p.count == 1 {
 			break
 		}
 	}
 	fmt.Println("Iterations", p.iter)
+	p.success = true
 	return &p
 }
 
@@ -45,13 +58,12 @@ func generateRandomBoard(p *Puzzle) [][]rune {
 	return b
 }
 
-func isValidBoard(p *Puzzle) bool {
+func countMatches(p *Puzzle) {
 	p.count = 0
 	for i, _ := range p.Board {
 		checkBoardRow(p, i)
 	}
 	fmt.Println("Counted ", p.count)
-	return p.count == 1
 }
 
 func checkBoardRow(p *Puzzle, i int) bool {
@@ -122,4 +134,50 @@ func SolutionToString(p *Puzzle) string {
 		solution += " down"
 	}
 	return solution
+}
+
+func insertRandomMatche(p *Puzzle) {
+	fmt.Println("h=", p.height, " w=", p.width)
+	s := Solution{
+		x:  rand.Intn(p.height - 1),
+		y:  rand.Intn(p.width - 1),
+		xd: 0,
+		yd: 0,
+	}
+	fmt.Println("s ", s)
+
+	if s.x-p.word.len < 0 {
+		s.xd = rand.Intn(1)
+	} else if s.x+p.word.len > p.height {
+		s.xd = rand.Intn(1) - 1
+	} else {
+		s.xd = rand.Intn(2) - 1
+	}
+
+	if s.xd == 0 {
+		fmt.Println("zero")
+		if s.y-p.word.len < 0 {
+			s.yd = 1
+		} else if s.y+p.word.len > p.width {
+			s.yd = -1
+		} else {
+			s.yd = rand.Intn(1)
+			if s.yd == 0 {
+				s.yd = -1
+			}
+		}
+	} else if s.y-p.word.len < 0 {
+		s.yd = rand.Intn(1)
+	} else if s.y+p.word.len > p.width {
+		s.yd = rand.Intn(1) - 1
+	} else {
+		s.yd = rand.Intn(2) - 1
+	}
+
+	fmt.Println("s ", s)
+	for i, r := range p.word.runes {
+		p.Board[s.x+i*s.xd][s.y+i*s.yd] = r
+		fmt.Println("setting r=", string(r), " x=", s.x+i*s.xd, " y=", s.y+i*s.yd)
+	}
+	fmt.Println("s ", s)
 }

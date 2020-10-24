@@ -14,7 +14,7 @@ func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 }
 
 func Puzzle(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	puzzle := wordmixer.NewPuzzle(ps.ByName("name"), 1.5)
+	puzzle := wordmixer.NewPuzzle(ps.ByName("name"), 2)
 	fmt.Fprint(w, wordmixer.ToHtml(puzzle))
 }
 

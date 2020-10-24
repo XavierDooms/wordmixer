@@ -3,17 +3,12 @@ package wordmixer
 import (
 	"math/rand"
 	"strings"
-	"time"
 )
 
 type Word struct {
 	Word  string
 	runes []rune
 	len   int
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
 }
 
 func NewWord(w string) *Word {
