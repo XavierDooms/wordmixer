@@ -19,8 +19,9 @@ type Puzzle struct {
 	sol    Solution
 }
 
-func NewPuzzle(word string, width int, height int) *Puzzle {
-	p := Puzzle{word: NewWord(word), width: width, height: height}
+func NewPuzzle(word string, size float32) *Puzzle {
+	height := float32(len(word)) * size
+	p := Puzzle{word: NewWord(word), width: 5 + int(height*1.5), height: 5 + int(height)}
 	p.Board = generateRandomBoard(&p)
 	for true {
 		p.iter++

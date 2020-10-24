@@ -13,8 +13,8 @@ func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	fmt.Fprint(w, "Welcome!\n")
 }
 
-func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	puzzle := wordmixer.NewPuzzle(ps.ByName("name"), 15, 15)
+func Puzzle(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	puzzle := wordmixer.NewPuzzle(ps.ByName("name"), 1.5)
 	fmt.Fprint(w, wordmixer.ToHtml(puzzle))
 }
 
@@ -22,7 +22,7 @@ func main() {
 	log.Print("Starting WordMixer")
 	router := httprouter.New()
 	router.GET("/", Index)
-	router.GET("/hello/:name", Hello)
+	router.GET("/puzzle/:name", Puzzle)
 
 	router.GlobalOPTIONS = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Header.Get("Access-Control-Request-Method") != "" {
